@@ -8,9 +8,13 @@ export interface SaprasPeminjaman {
 export interface DaftarPeminjaman {
   id: string;
   status: string;
-  user: IUserSchema;
   detailPeminjamanRuangan: {
     ruangan: string;
+    employeeName: string;
+    employeeDivision: string;
+    employeeNik: string;
+    employeePhone: string;
+    employeeEmail: string;
     date: string;
     startHour: string;
     endHour: string;

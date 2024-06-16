@@ -30,6 +30,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableRow,
+} from "@/components/ui/table";
 import useDetailDaftarPeminjamanFeature from "./hook";
 
 const DaftarPeminjamanDetailFeature = ({
@@ -62,6 +69,51 @@ const DaftarPeminjamanDetailFeature = ({
       </div>
     );
 
+  const invoices = [
+    {
+      invoice: "INV001",
+      paymentStatus: "Paid",
+      totalAmount: "$250.00",
+      paymentMethod: "Credit Card",
+    },
+    {
+      invoice: "INV002",
+      paymentStatus: "Pending",
+      totalAmount: "$150.00",
+      paymentMethod: "PayPal",
+    },
+    {
+      invoice: "INV003",
+      paymentStatus: "Unpaid",
+      totalAmount: "$350.00",
+      paymentMethod: "Bank Transfer",
+    },
+    {
+      invoice: "INV004",
+      paymentStatus: "Paid",
+      totalAmount: "$450.00",
+      paymentMethod: "Credit Card",
+    },
+    {
+      invoice: "INV005",
+      paymentStatus: "Paid",
+      totalAmount: "$550.00",
+      paymentMethod: "PayPal",
+    },
+    {
+      invoice: "INV006",
+      paymentStatus: "Pending",
+      totalAmount: "$200.00",
+      paymentMethod: "Bank Transfer",
+    },
+    {
+      invoice: "INV007",
+      paymentStatus: "Unpaid",
+      totalAmount: "$300.00",
+      paymentMethod: "Credit Card",
+    },
+  ];
+
   return (
     <div className="relative">
       <ScrollArea className="h-[88vh]">
@@ -69,73 +121,124 @@ const DaftarPeminjamanDetailFeature = ({
           <h1 className="text-2xl font-semibold text-gray-800">
             Detail Peminjaman Ruangan
           </h1>
-          <h3 className={cn(`${statusColor(data?.data.status)} font-medium`)}>
-            Status <span>{data?.data.status}</span>
-          </h3>
-          <div className="flex gap-10">
-            <div className="space-y-3 font-medium text-gray-600">
-              <p>Nama Peminjam</p>
-              <p>Email</p>
-              <p>Ruang yang dipinjam</p>
-              <p>Tanggal Peminjaman</p>
-              <p>Jam Peminjaman</p>
-              <p>Jumlah Orang</p>
-              <p>Keperluan</p>
-              <p>Tambahan lain</p>
-              <p>Sapras yang dipinjam</p>
-            </div>
-            <div className="space-y-3 text-gray-800">
-              <p>
-                : {data?.data.user.firstName} {data?.data.user.lastName}
-              </p>
-              <p>: {data?.data.user.email}</p>
-              <p>
-                :{" "}
-                <span className="font-semibold">
-                  {data?.data.detailPeminjamanRuangan[0].ruangan}
-                </span>
-              </p>
-              <p>
-                :{" "}
-                <span className="font-semibold">
-                  {new Date(
-                    data?.data.detailPeminjamanRuangan[0].date,
-                  ).toLocaleDateString("id-ID", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    weekday: "long",
-                  })}
-                </span>
-              </p>
-              <p>
-                :{" "}
-                <span className="font-semibold">
-                  {data?.data.detailPeminjamanRuangan[0].startHour} -{" "}
-                  {data?.data.detailPeminjamanRuangan[0].endHour}
-                </span>
-              </p>
-              <p>: {data?.data.detailPeminjamanRuangan[0].people} Orang</p>
-              <p>: {data?.data.detailPeminjamanRuangan[0].necessity}</p>
-              <p>: {data?.data.detailPeminjamanRuangan[0].additional}</p>
-              <div className="flex gap-1">
-                :
-                <div className="flex flex-col">
-                  {data?.data?.detailPeminjamanRuangan[0].saprasPeminjaman
-                    .length > 0 ? (
-                    data?.data?.detailPeminjamanRuangan[0].saprasPeminjaman.map(
-                      (item: any, index: number) => (
-                        <span key={index} className="text-gray-700">
-                          {item.name} - {item.quantity} Item
-                        </span>
-                      ),
-                    )
-                  ) : (
-                    <span className="text-gray-500">-</span>
-                  )}
-                </div>
-              </div>
-            </div>
+          <div className="w-full max-w-[60vw]">
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">Nama Peminjam</TableCell>
+                  <TableCell>
+                    {data?.data.detailPeminjamanRuangan[0].employeeName}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Divisi Peminjam</TableCell>
+                  <TableCell>
+                    {data?.data.detailPeminjamanRuangan[0].employeeDivision}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">NIK Karyawan</TableCell>
+                  <TableCell>
+                    {data?.data.detailPeminjamanRuangan[0].employeeNik}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Email</TableCell>
+                  <TableCell>
+                    {data?.data.detailPeminjamanRuangan[0].employeeEmail}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Phone</TableCell>
+                  <TableCell>
+                    {data?.data.detailPeminjamanRuangan[0].employeePhone}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">
+                    Ruang yang dipinjam
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {data?.data.detailPeminjamanRuangan[0].ruangan}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">
+                    Tanggal Peminjaman
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {new Date(
+                      data?.data.detailPeminjamanRuangan[0].date,
+                    ).toLocaleDateString("id-ID", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      weekday: "long",
+                    })}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Jam Peminjaman</TableCell>
+                  <TableCell className="font-medium">
+                    {data?.data.detailPeminjamanRuangan[0].startHour} -{" "}
+                    {data?.data.detailPeminjamanRuangan[0].endHour}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Jumlah Orang</TableCell>
+                  <TableCell>
+                    {data?.data.detailPeminjamanRuangan[0].people} Orang
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Keperluan</TableCell>
+                  <TableCell>
+                    {data?.data.detailPeminjamanRuangan[0].necessity}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Tambahan lain</TableCell>
+                  <TableCell>
+                    {data?.data.detailPeminjamanRuangan[0].additional}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">
+                    Sapras yang dipinjam
+                  </TableCell>
+                  <TableCell>
+                    {data?.data?.detailPeminjamanRuangan[0].saprasPeminjaman
+                      .length > 0 ? (
+                      data?.data?.detailPeminjamanRuangan[0].saprasPeminjaman.map(
+                        (item: any, index: number) => (
+                          <span key={index} className="text-gray-700">
+                            {item.name} - {item.quantity} Item
+                          </span>
+                        ),
+                      )
+                    ) : (
+                      <span className="text-gray-500">-</span>
+                    )}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TableCell>Status</TableCell>
+                  <TableCell>
+                    {
+                      <h3
+                        className={cn(
+                          `${statusColor(data?.data.status)} font-medium`,
+                        )}
+                      >
+                        <span>{data?.data.status}</span>
+                      </h3>
+                    }
+                  </TableCell>
+                </TableRow>
+              </TableFooter>
+            </Table>
           </div>
         </div>
       </ScrollArea>

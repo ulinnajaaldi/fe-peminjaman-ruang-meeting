@@ -3,13 +3,15 @@
 import React from "react";
 
 import { cn } from "@/lib/utils";
-import { useGetRuanganDetail } from "@/useCases/RuanganUseCases";
+import {
+  useGetDetailPeminjamanRuangan,
+  useGetRuanganDetail,
+} from "@/useCases/RuanganUseCases";
 import { useMutateAllSapras } from "@/useCases/SaprasUseCases";
 import {
-  useDetailPeminjamRuangan,
   useProsesPeminjamanRuangan,
+  useProsesPinjamCheckPeminjaman,
 } from "@/useCases/ProsesPinjamUseCases";
-import { ROUTES_PATH } from "@/constants/routes";
 import { BlurImage } from "@/components/common";
 import NotFoundPageDetails from "@/components/layouts/not-found-page-details";
 import { Calendar } from "@/components/ui/calendar";
@@ -23,11 +25,10 @@ const HomebaseRUanganDetailFeature = ({
   params: { slug: string };
 }) => {
   const {
-    router,
-    data,
+    checkKetersediaan,
+    setCheckKetersediaan,
     selectedDate,
     setSelectedDate,
-    booked,
     isPinjam,
     setIsPinjam,
     saranaSelected,
@@ -35,7 +36,6 @@ const HomebaseRUanganDetailFeature = ({
     saranaForm,
     setSaranaForm,
     form,
-    handleDayClick,
   } = useRuanganDetailFeature();
 
   const {
@@ -50,21 +50,33 @@ const HomebaseRUanganDetailFeature = ({
     mutate: mutateSapras,
   } = useMutateAllSapras();
 
-  const { data: dataPeminjamanRuang, isLoading: isLoadingPeminjamanRuang } =
-    useDetailPeminjamRuangan(dataRuangan, selectedDate, dataRuangan?.data?.id);
-
   const { mutate, isPending } = useProsesPeminjamanRuangan(
-    data?.data?.id,
     dataRuangan?.data?.id,
     saranaForm,
     setIsPinjam,
   );
+
+  const { mutate: mutateCheck, isPending: isPendingCheck } =
+    useProsesPinjamCheckPeminjaman(
+      dataRuangan?.data?.id,
+      form.getValues("date"),
+      form.getValues("startHour"),
+      form.getValues("endHour"),
+      setCheckKetersediaan,
+    );
+
+  const { data: dataPeminjamanRuang, mutate: mutateDetailPeminjamanRuangan } =
+    useGetDetailPeminjamanRuangan(dataRuangan?.data?.id, selectedDate);
 
   const bookedDays = dataRuangan?.data?.DetailPeminjamanRuangan?.map(
     (item: any) => {
       return new Date(item.date);
     },
   );
+
+  const handleCheckKetersediaan = () => {
+    mutateCheck();
+  };
 
   if (isLoadingRuangan)
     return (
@@ -129,12 +141,11 @@ const HomebaseRUanganDetailFeature = ({
                 modifiersStyles={{
                   booked: { border: "2px solid currentColor" },
                 }}
-                onDayClick={handleDayClick}
+                onDayClick={() => {
+                  mutateDetailPeminjamanRuangan();
+                }}
                 className="rounded-md border"
                 disabled={(date) => {
-                  if (isLoadingPeminjamanRuang) {
-                    return true;
-                  }
                   const today = new Date();
                   today.setHours(0, 0, 0, 0);
                   return date < today;
@@ -142,7 +153,7 @@ const HomebaseRUanganDetailFeature = ({
               />
             </div>
             <div className="w-full px-9 text-sm">
-              {booked ? (
+              {dataPeminjamanRuang?.data?.length > 0 ? (
                 <div className="flex flex-col gap-1">
                   {dataPeminjamanRuang?.data?.map((item: any) => (
                     <div
@@ -152,14 +163,14 @@ const HomebaseRUanganDetailFeature = ({
                       )}
                     >
                       <div className="flex items-center justify-between">
-                        <h4>
-                          {item.ProsessPinjam.User.firstName}{" "}
-                          {item.ProsessPinjam.User.lastName}
-                        </h4>
+                        <h4>{item.employeeName}</h4>
                         <p className="text-xs">
                           {item.startHour} - {item.endHour}
                         </p>
                       </div>
+                      <p className="text-xs font-light text-gray-700">
+                        Division {item.employeeDivision}
+                      </p>
                       <p className="line-clamp-2 text-xs font-light text-gray-700">
                         {item.necessity}
                       </p>
@@ -186,6 +197,9 @@ const HomebaseRUanganDetailFeature = ({
               setIsPinjam={setIsPinjam}
               setSaranaForm={setSaranaForm}
               setSaranaSelected={setSaranaSelected}
+              checkKetersediaan={checkKetersediaan}
+              handleKetersedian={handleCheckKetersediaan}
+              isPendingCheck={isPendingCheck}
             />
           </div>
         </div>

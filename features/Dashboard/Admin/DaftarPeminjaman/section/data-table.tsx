@@ -142,9 +142,9 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {isLoading ? (
-              <DataTableLoader tableLength={11} />
-            ) : table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              <DataTableLoader tableLength={10} />
+            ) : table.getRowModel()?.rows?.length ? (
+              table.getRowModel()?.rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}

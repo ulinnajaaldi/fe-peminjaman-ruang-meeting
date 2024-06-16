@@ -15,7 +15,7 @@ export const statusColor = (status: string) => {
     case "Menunggu Persetujuan":
       return "text-yellow-500";
     default:
-      return "text-black";
+      return "text-yellow-500";
   }
 };
 

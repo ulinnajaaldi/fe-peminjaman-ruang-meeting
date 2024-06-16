@@ -17,6 +17,7 @@ import {
   prosesPeminjamanRuangan,
   rejectDaftarPinjamUser,
   rejectProsesPinjam,
+  prosesPinjamCheckPeminjaman,
 } from "@/services/ProsesPinjamServices";
 import { IDetailPeminjamanRuanganSchema } from "@/domain/Ruangan";
 
@@ -100,13 +101,12 @@ export const useDetailPeminjamRuangan = (
   idRuangan: string,
 ) => {
   return useQuery({
-    queryKey: ["peminjaman-ruangan", dataRuangan, selectedDate],
+    queryKey: ["peminjaman-ruangan", dataRuangan, selectedDate, idRuangan],
     queryFn: () => detailPeminjamRuang(selectedDate, idRuangan),
   });
 };
 
 export const useProsesPeminjamanRuangan = (
-  userId: string,
   idRuangan: string,
   saprasPeminjaman: string,
   setIsPinjam: React.Dispatch<React.SetStateAction<boolean>>,
@@ -114,7 +114,6 @@ export const useProsesPeminjamanRuangan = (
   return useMutation({
     mutationFn: (value: IDetailPeminjamanRuanganSchema) =>
       prosesPeminjamanRuangan(
-        userId,
         idRuangan,
         value,
         value.date.toISOString(),
@@ -123,12 +122,41 @@ export const useProsesPeminjamanRuangan = (
     onSuccess: () => {
       toast.success("Ruangan berhasil dipinjam", {
         description:
-          "Silahkan cek dashboard untuk melihat status peminjaman ruangan",
+          "Silahkan cek email untuk melihat status peminjaman ruangan",
       });
       setIsPinjam(false);
     },
     onError: () => {
       toast.error("Gagal meminjam ruangan");
+    },
+  });
+};
+
+export const useProsesPinjamCheckPeminjaman = (
+  idRuangan: string,
+  date: Date,
+  startHour: string,
+  endHour: string,
+  setCheckKetersediaan: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  return useMutation({
+    mutationFn: async () => {
+      const response = await prosesPinjamCheckPeminjaman(
+        idRuangan,
+        date,
+        startHour,
+        endHour,
+      );
+      return response;
+    },
+    onSuccess: (data) => {
+      if (data?.data === true) {
+        toast.info(data?.message);
+        setCheckKetersediaan(true);
+      } else {
+        toast.error(data?.message);
+        setCheckKetersediaan(false);
+      }
     },
   });
 };

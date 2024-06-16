@@ -19,26 +19,26 @@ export const columns: ColumnDef<DaftarPeminjaman>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: "user.fullname",
+    accessorKey: "detailPeminjamanRuangan.employeeName",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Peminjam" />
     ),
     cell: ({ row }) => {
       const datas = row.original;
 
-      return <span>{datas.user.fullname}</span>;
+      return <span>{datas.detailPeminjamanRuangan[0].employeeName}</span>;
     },
     enableSorting: false,
   },
   {
-    accessorKey: "user.email",
+    accessorKey: "detailPeminjamanRuangan.employeeDivision",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
+      <DataTableColumnHeader column={column} title="Divisi" />
     ),
     cell: ({ row }) => {
       const datas = row.original;
 
-      return <span>{datas.user.email}</span>;
+      return <span>{datas.detailPeminjamanRuangan[0].employeeDivision}</span>;
     },
     enableSorting: false,
   },
@@ -76,17 +76,6 @@ export const columns: ColumnDef<DaftarPeminjaman>[] = [
           {datas.detailPeminjamanRuangan[0].endHour}
         </span>
       );
-    },
-    enableSorting: false,
-  },
-  {
-    accessorKey: "detailPeminjamanRuangan.people",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title=" Orang" />
-    ),
-    cell: ({ row }) => {
-      const datas = row.original;
-      return <span>{datas.detailPeminjamanRuangan[0].people}</span>;
     },
     enableSorting: false,
   },
@@ -138,9 +127,7 @@ export const columns: ColumnDef<DaftarPeminjaman>[] = [
     cell: ({ row }) => {
       const datas = row.original;
       return (
-        <span className={cn(`${statusColor(datas.status)}`)}>
-          {datas.status}
-        </span>
+        <span className={`${statusColor(datas.status)}`}>{datas.status}</span>
       );
     },
   },

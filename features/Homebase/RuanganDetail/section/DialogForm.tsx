@@ -47,6 +47,9 @@ const DialogForm: React.FC<DialogForm> = (props) => {
     saranaForm,
     setSaranaForm,
     form,
+    checkKetersediaan,
+    handleKetersedian,
+    isPendingCheck,
   } = props;
 
   return (
@@ -207,7 +210,7 @@ const DialogForm: React.FC<DialogForm> = (props) => {
 
                 <FormField
                   control={form.control}
-                  name="employeeDivision"
+                  name="employeeNik"
                   render={({ field }) => (
                     <FormItem className="px-1 pt-3">
                       <FormLabel>
@@ -227,7 +230,7 @@ const DialogForm: React.FC<DialogForm> = (props) => {
 
                 <FormField
                   control={form.control}
-                  name="employeeDivision"
+                  name="employeeEmail"
                   render={({ field }) => (
                     <FormItem className="px-1 pt-3">
                       <FormLabel>
@@ -248,7 +251,7 @@ const DialogForm: React.FC<DialogForm> = (props) => {
 
                 <FormField
                   control={form.control}
-                  name="employeeDivision"
+                  name="employeePhone"
                   render={({ field }) => (
                     <FormItem className="px-1 pt-3">
                       <FormLabel>
@@ -480,9 +483,29 @@ const DialogForm: React.FC<DialogForm> = (props) => {
                   </Popover>
                 </div>
               </ScrollArea>
-              <Button type="submit" disabled={isPending} className="w-full">
-                Prosess
-              </Button>
+              <div className="flex items-center justify-between gap-3">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={handleKetersedian}
+                  className={`${checkKetersediaan ? "bg-green-500 hover:bg-green-500/80" : "bg-sky-500 hover:bg-sky-500/80"} text-white`}
+                  disabled={
+                    !form.getValues("date") ||
+                    !form.getValues("startHour") ||
+                    !form.getValues("endHour") ||
+                    isPendingCheck
+                  }
+                >
+                  Check Ketersediaan Ruangan
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={isPending || !checkKetersediaan}
+                  className="w-full"
+                >
+                  Prosess
+                </Button>
+              </div>
             </form>
           </Form>
         )}

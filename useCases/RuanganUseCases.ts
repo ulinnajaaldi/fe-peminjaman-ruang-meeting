@@ -9,6 +9,7 @@ import {
   getRuanganBySlug,
   getRuanganDetail,
   updateRuangan,
+  getDetailPeminjamanRuangan,
 } from "@/services/RuanganServices";
 
 export const useCreateRuangan = (
@@ -95,5 +96,14 @@ export const useDeleteRuangan = (slug: string, router: any) => {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+};
+
+export const useGetDetailPeminjamanRuangan = (
+  idRuangan: string,
+  date: Date | undefined,
+) => {
+  return useMutation({
+    mutationFn: () => getDetailPeminjamanRuangan(idRuangan, date),
   });
 };

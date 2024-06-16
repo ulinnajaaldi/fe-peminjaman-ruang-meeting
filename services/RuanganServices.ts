@@ -49,3 +49,20 @@ export const deleteRuangan = async (slug: string) => {
 
   return;
 };
+
+export const getDetailPeminjamanRuangan = async (
+  idRuangan: string,
+  date: Date | undefined,
+) => {
+  const response = await axiosInstanceToken.get(
+    `/v1/api/ruangan/detail/peminjaman`,
+    {
+      params: {
+        idRuangan,
+        date,
+      },
+    },
+  );
+
+  return response.data;
+};

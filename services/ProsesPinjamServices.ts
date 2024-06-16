@@ -72,7 +72,6 @@ export const detailPeminjamRuang = async (
 };
 
 export const prosesPeminjamanRuangan = async (
-  userId: string,
   idRuangan: string,
   value: IDetailPeminjamanRuanganSchema,
   date: string,
@@ -81,13 +80,31 @@ export const prosesPeminjamanRuangan = async (
   const response = await axiosInstanceToken.post(
     "/v1/api/proses-pinjam/peminjaman-ruangan",
     {
-      userId,
       detailPeminjamanRuangan: {
         idRuangan,
         ...value,
         date,
         saprasPeminjaman,
       },
+    },
+  );
+
+  return response.data;
+};
+
+export const prosesPinjamCheckPeminjaman = async (
+  idRuangan: string,
+  date: Date,
+  startHour: string,
+  endHour: string,
+) => {
+  const response = await axiosInstance.post(
+    "/v1/api/proses-pinjam/check-peminjaman",
+    {
+      idRuangan,
+      date,
+      startHour,
+      endHour,
     },
   );
 
