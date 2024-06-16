@@ -9,6 +9,7 @@ export default withUt({
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
     "./features/**/*.{ts,tsx}",
+    "./lib/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
