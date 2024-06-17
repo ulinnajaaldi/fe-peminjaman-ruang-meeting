@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useShallow } from "zustand/react/shallow";
 import { CircleUser, Menu } from "lucide-react";
+import Image from "next/image";
 
 import { ROUTES_PATH } from "@/constants/routes";
 import useAuthStore from "@/hook/useAuth";
@@ -61,74 +62,87 @@ const Navbar = () => {
     <header className="sticky top-0 z-40 bg-gradient-to-b from-slate-50 to-transparent backdrop-blur-sm">
       <nav className="container">
         <div className="hidden items-center justify-between py-3 md:flex">
-          <div className="flex items-center justify-center gap-32">
-            <div>
-              <h1 className="font-bold">Logo</h1>
-            </div>
-            <div className="flex items-center justify-center gap-8">
-              {NAVBAR_MENU.map((menu, index) => (
-                <Link
-                  key={index}
-                  href={menu.path}
-                  className={`${isActive === menu.path ? "text-blue-500" : "text-gray-700"} font-medium transition-colors hover:text-blue-500`}
-                  onClick={() => setIsActive(menu.path)}
-                >
-                  {menu.name}
-                </Link>
-              ))}
-            </div>
+          {/* <div className="flex items-center justify-center gap-32"> */}
+          <div className="relative h-[40px]">
+            <Image
+              src="/images/logo-tribun-solo.png"
+              alt="Logo Tribun Solo"
+              width={400}
+              height={400}
+              className="h-full w-full object-contain"
+            />
           </div>
-          {data !== null ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="rounded-full"
-                >
-                  <CircleUser className="h-5 w-5" />
-                  <span className="sr-only">Toggle user menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>
-                  {data?.data?.fullname} <br />
-                  <span className="text-sm font-normal">
-                    {data?.data?.email}
-                  </span>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link
-                    href={
-                      data?.data?.role === "Admin"
-                        ? ROUTES_PATH.dashboardAdmin.home
-                        : ROUTES_PATH.dashboardSuperAdmin.home
-                    }
+          {/* </div> */}
+          <div className="flex items-center justify-center gap-8">
+            {NAVBAR_MENU.map((menu, index) => (
+              <Link
+                key={index}
+                href={menu.path}
+                className={`${isActive === menu.path ? "text-blue-500" : "text-gray-700"} font-medium transition-colors hover:text-blue-500`}
+                onClick={() => setIsActive(menu.path)}
+              >
+                {menu.name}
+              </Link>
+            ))}
+          </div>
+          {
+            data !== null ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className="rounded-full"
                   >
-                    Dashboard
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <button
-                    onClick={logoutHandler}
-                    className="w-full cursor-pointer"
-                  >
-                    Logout
-                  </button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Button variant="outline" asChild>
-              <Link href={ROUTES_PATH.login}>Login</Link>
-            </Button>
-          )}
+                    <CircleUser className="h-5 w-5" />
+                    <span className="sr-only">Toggle user menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>
+                    {data?.data?.fullname} <br />
+                    <span className="text-sm font-normal">
+                      {data?.data?.email}
+                    </span>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href={
+                        data?.data?.role === "Admin"
+                          ? ROUTES_PATH.dashboardAdmin.home
+                          : ROUTES_PATH.dashboardSuperAdmin.home
+                      }
+                    >
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <button
+                      onClick={logoutHandler}
+                      className="w-full cursor-pointer"
+                    >
+                      Logout
+                    </button>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : null
+            // <Button variant="outline" asChild>
+            //   <Link href={ROUTES_PATH.login}>Login</Link>
+            // </Button>
+          }
         </div>
         <div className="flex items-center justify-between py-2 md:hidden">
-          <div>
-            <h1 className="font-bold">Logo</h1>
+          <div className="relative h-[30px]">
+            <Image
+              src="/images/logo-tribun-solo.png"
+              alt="Logo Tribun Solo"
+              width={400}
+              height={400}
+              className="h-full w-full object-contain"
+            />
           </div>
           <Sheet>
             <SheetTrigger asChild>
@@ -138,7 +152,17 @@ const Navbar = () => {
             </SheetTrigger>
             <SheetContent side="left">
               <SheetHeader>
-                <SheetTitle>Logo</SheetTitle>
+                <SheetTitle>
+                  <div className="relative h-[30px]">
+                    <Image
+                      src="/images/logo-tribun-solo.png"
+                      alt="Logo Tribun Solo"
+                      width={400}
+                      height={400}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                </SheetTitle>
               </SheetHeader>
               <div className="mt-3 flex flex-col gap-2">
                 {NAVBAR_MENU.map((menu, index) => (
@@ -153,19 +177,20 @@ const Navbar = () => {
                 ))}
               </div>
               <Button variant="outline" asChild className="mt-5">
-                {data !== null ? (
-                  <Link
-                    href={
-                      data?.data?.role === "Admin"
-                        ? ROUTES_PATH.dashboardAdmin.home
-                        : ROUTES_PATH.dashboardSuperAdmin.home
-                    }
-                  >
-                    Dashboard
-                  </Link>
-                ) : (
-                  <Link href={ROUTES_PATH.login}>Login</Link>
-                )}
+                {
+                  data !== null ? (
+                    <Link
+                      href={
+                        data?.data?.role === "Admin"
+                          ? ROUTES_PATH.dashboardAdmin.home
+                          : ROUTES_PATH.dashboardSuperAdmin.home
+                      }
+                    >
+                      Dashboard
+                    </Link>
+                  ) : null
+                  // <Link href={ROUTES_PATH.login}>Login</Link>
+                }
               </Button>
             </SheetContent>
           </Sheet>

@@ -12,7 +12,7 @@ export default function HomebaseLayout({
     <>
       <Navbar />
       <div className="">{children}</div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

@@ -24,7 +24,7 @@ const HomepageFeature = () => {
               Peminjaman Ruang Meeting
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Sistem peminjaman ruang meeting PT.XXX
+              Sistem peminjaman ruang meeting di Tribun Solo
             </p>
           </div>
         </div>
