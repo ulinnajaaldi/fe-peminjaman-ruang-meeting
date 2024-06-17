@@ -88,7 +88,6 @@ const DashboardRuanganEditFeature = ({
     data?.data?.id,
     description,
     imagesArray,
-    content,
     facilities,
     router,
   );
