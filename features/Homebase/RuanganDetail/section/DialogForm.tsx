@@ -48,6 +48,7 @@ const DialogForm: React.FC<DialogForm> = (props) => {
     setSaranaForm,
     form,
     checkKetersediaan,
+    setCheckKetersediaan,
     handleKetersedian,
     isPendingCheck,
   } = props;
@@ -111,6 +112,9 @@ const DialogForm: React.FC<DialogForm> = (props) => {
                               const today = new Date();
                               today.setHours(0, 0, 0, 0);
                               return date < today;
+                            }}
+                            onDayClick={() => {
+                              setCheckKetersediaan(false);
                             }}
                             initialFocus
                           />

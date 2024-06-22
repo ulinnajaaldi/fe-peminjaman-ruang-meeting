@@ -53,7 +53,10 @@ const HomebaseRUanganDetailFeature = ({
   const { mutate, isPending } = useProsesPeminjamanRuangan(
     dataRuangan?.data?.id,
     saranaForm,
+    // @ts-ignore
+    form,
     setIsPinjam,
+    setCheckKetersediaan,
   );
 
   const { mutate: mutateCheck, isPending: isPendingCheck } =
@@ -198,6 +201,7 @@ const HomebaseRUanganDetailFeature = ({
               setSaranaForm={setSaranaForm}
               setSaranaSelected={setSaranaSelected}
               checkKetersediaan={checkKetersediaan}
+              setCheckKetersediaan={setCheckKetersediaan}
               handleKetersedian={handleCheckKetersediaan}
               isPendingCheck={isPendingCheck}
             />

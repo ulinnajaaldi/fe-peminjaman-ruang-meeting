@@ -20,6 +20,7 @@ import {
   prosesPinjamCheckPeminjaman,
 } from "@/services/ProsesPinjamServices";
 import { IDetailPeminjamanRuanganSchema } from "@/domain/Ruangan";
+import { UseFormReturn } from "react-hook-form";
 
 export const useDaftarPinjamAll = (
   page: number,
@@ -109,7 +110,9 @@ export const useDetailPeminjamRuangan = (
 export const useProsesPeminjamanRuangan = (
   idRuangan: string,
   saprasPeminjaman: string,
+  form: UseFormReturn,
   setIsPinjam: React.Dispatch<React.SetStateAction<boolean>>,
+  setCheckKetersediaan: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   return useMutation({
     mutationFn: (value: IDetailPeminjamanRuanganSchema) =>
@@ -125,6 +128,8 @@ export const useProsesPeminjamanRuangan = (
           "Silahkan cek email untuk melihat status peminjaman ruangan",
       });
       setIsPinjam(false);
+      form.reset();
+      setCheckKetersediaan(false);
     },
     onError: () => {
       toast.error("Gagal meminjam ruangan");
