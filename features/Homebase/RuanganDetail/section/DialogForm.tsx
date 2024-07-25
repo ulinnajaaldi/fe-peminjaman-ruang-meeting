@@ -218,7 +218,8 @@ const DialogForm: React.FC<DialogForm> = (props) => {
                   render={({ field }) => (
                     <FormItem className="px-1 pt-3">
                       <FormLabel>
-                        Nomor Karyawan <span className="text-red-500">*</span>
+                        Nomer Induk Karyawan{" "}
+                        <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input

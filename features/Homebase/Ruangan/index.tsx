@@ -32,7 +32,7 @@ const HomebaseRuanganFeature = () => {
       <section className="container mb-5 mt-20 flex flex-col items-center gap-2">
         <h1 className="text-center text-3xl font-bold">Daftar Ruangan</h1>
         <p className="text-center text-gray-600">
-          Daftar ruangan yang tersedia di Perpustakaan UMS untuk dipinjam
+          Daftar ruangan yang tersedia untuk dipinjam
         </p>
         <div className="mt-3 flex w-full items-center justify-center">
           <Input
